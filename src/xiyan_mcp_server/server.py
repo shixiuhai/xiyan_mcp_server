@@ -1,6 +1,6 @@
 import logging
 import os
-
+import yaml  # 添加yaml库导入
 
 from mysql.connector import connect, Error
 from mcp.server import  FastMCP
@@ -22,47 +22,32 @@ logging.basicConfig(
 )
 logger = logging.getLogger("xiyan_mcp_server")
 
-def get_model_config():
-    model_config ={
-        "name":os.getenv("MODEL_NAME","qwen-max-0125"),
-        "key":os.getenv("MODEL_KEY",""),
-        "url":os.getenv("MODEL_URL","https://dashscope.aliyuncs.com/compatible-mode/v1")
-    }
-    if not all([model_config["name"], model_config["key"]]):
-        logger.error("Missing required model configuration. Please check environment variables:")
-        logger.error("MODEL_NAME and MODEL_KEY are required")
-        raise ValueError("Missing required model configuration")
+def get_yml_config():
+    config_path = os.getenv("YML","")
+    try:
+        with open(config_path, 'r') as file:
+            config = yaml.safe_load(file)
+        return config
+    except FileNotFoundError:
+        logger.error(f"Configuration file {config_path} not found.")
+        raise
+    except yaml.YAMLError as exc:
+        logger.error(f"Error parsing configuration file {config_path}: {exc}")
+        raise
 
-    return model_config
 
-def get_db_config():
-
-    """Get database configuration from environment variables."""
-    config = {
-        "host": os.getenv("MYSQL_HOST", ""),
-        "port": int(os.getenv("MYSQL_PORT", "3306")),
-        "user": os.getenv("MYSQL_USER",''),
-        "password": os.getenv("MYSQL_PASSWORD",""),
-        "database": os.getenv("MYSQL_DATABASE",'')
-    }
-    
-    if not all([config["user"], config["password"], config["database"]]):
-        logger.error("Missing required database configuration. Please check environment variables:")
-        logger.error("MYSQL_USER, MYSQL_PASSWORD, and MYSQL_DATABASE are required")
-        raise ValueError("Missing required database configuration")
-    
-    return config
 
 def get_xiyan_config(db_config):
     xiyan_db_config = DBConfig(dialect='mysql',db_name=db_config['database'], user_name=db_config['user'], db_pwd=db_config['password'], db_host=db_config['host'], port=db_config['port'])
     return xiyan_db_config
 
-global_db_config = get_db_config()
+
+global_config = get_yml_config()
+#print(global_config)
+model_config = global_config['model']
+global_db_config = global_config['database']
 global_xiyan_db_config = get_xiyan_config(global_db_config)
-model_config = get_model_config()
-model_name= model_config['name']
-model_key=model_config['key']
-model_url = model_config['url']
+
 
 
 @mcp.resource('mysql://'+global_db_config['database'])
@@ -75,7 +60,7 @@ async def read_resource() -> str:
 @mcp.resource("mysql://{table_name}")
 async def read_resource(table_name) -> str:
     """Read table contents."""
-    config = get_db_config()
+    config = global_db_config
     try:
         with connect(**config) as conn:
             with conn.cursor() as cursor:
@@ -110,7 +95,7 @@ def sql_gen_and_execute(db_env, query: str):
         {"role": "system", "content": prompt},
         {"role": "user", "content": f"用户的问题是: {query}"}
     ]
-    param = {"model": model_config['name'], "messages": messages,"key":model_key,"url":model_config['url']}
+    param = {"model": model_config['name'], "messages": messages,"key":model_config['key'],"url":model_config['url']}
 
     try:
         response = call_dashscope(**param)
@@ -126,8 +111,8 @@ def sql_gen_and_execute(db_env, query: str):
 
         sql_res = db_env.database.fetch_truncated(sql_query,max_rows=100)
         markdown_res = db_env.database.trunc_result_to_markdown(sql_res)
-        logger.info(f"SQL query: {sql_query}\nSQL result: {markdown_res}")
-        return markdown_res
+        logger.info(f"SQL query: {sql_query}\nSQL result: {sql_res}")
+        return markdown_res.strip()
 
     except Exception as e:
         return str(e)
@@ -151,12 +136,11 @@ def sql_fix(dialect: str, mschema: str, query: str, sql_query: str, error_info: 
 【错误信息】
 {sql_res}'''.format(question=query, sql=sql_query, sql_res=error_info)
 
-    model = model_name
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_prompt}
     ]
-    param = {"model": model, "messages": messages,"key":model_key,'url':model_config['url']}
+    param = {"model": model_config['name'], "messages": messages,"key":model_config['key'],'url':model_config['url']}
 
     response = call_dashscope(**param)
     content = response.choices[0].message.content
@@ -170,12 +154,12 @@ def call_xiyan(query: str)-> str:
     Args:
         query: The query in natual language
     """
-    db_config = get_db_config()
-    xiyan_config = get_xiyan_config(db_config)
+    #db_config = global_db_config
+    #xiyan_config = get_xiyan_config(db_config)
 
     logger.info(f"Calling tool with arguments: {query}")
     try:
-        db_engine = init_db_conn(xiyan_config)
+        db_engine = init_db_conn(global_xiyan_db_config)
         db_source = HITLSQLDatabase(db_engine)
     except Exception as  e:
 
@@ -186,7 +170,7 @@ def call_xiyan(query: str)-> str:
 
     return str(res)
 @mcp.tool()
-def get_data_via_natual_language(query: str)-> list[TextContent]:
+def get_data_via_natural_language(query: str)-> list[TextContent]:
     """Fetch the data from database through a natural language query
 
     Args:

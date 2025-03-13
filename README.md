@@ -1,7 +1,8 @@
 
 # XiYan MCP Server
 
-A Model Context Protocol (MCP) server that enables secure interaction with MySQL databases. This server allows AI assistants to list tables, read data, and execute SQL queries through a controlled interface, making database exploration and analysis safer and more structured.
+A Model Context Protocol (MCP) server that enables natural language queries to MySQL databases, power by XiYanSQL as text-to-sql technique.
+
 
 ## Features
 - Fetch data by natural language throught XiYanSQL (https://github.com/XGenerationLab/XiYan-SQL)
@@ -19,15 +20,15 @@ pip install xiyan-mcp-server
 Set the following environment variables:
 
 ```bash
-MYSQL_HOST=    # Database host
-MYSQL_PORT=         # Optional: Database port (defaults to 3306 if not specified)
-MYSQL_USER=
-MYSQL_PASSWORD=
-MYSQL_DATABASE=
-MODEL_NAME=       
-MODEL_KEY=  
-MODEL_URL= 
+YML=    # yml config file path
 ```
+
+see config_demo.yml for example
+
+## Models
+
+Any LLMs are supported as long as they support the `chat` API. 
+We recommend using xiyansql-qwencoder-32b (https://github.com/XGenerationLab/XiYanSQL-QwenCoder) for best performance.
 
 ## Usage
 
@@ -47,14 +48,7 @@ Add this to your `claude_desktop_config.json`:
         "xiyan_mcp_server"
       ],
       "env": {
-        "MYSQL_HOST": "localhost",
-        "MYSQL_PORT": "3306",
-        "MYSQL_USER": "your_username",
-        "MYSQL_PASSWORD": "your_password",
-        "MYSQL_DATABASE": "your_database",
-        "MODEL_NAME": "your_model_name",
-        "MODEL_URL": "your_model enpoint",
-        "MODEL_KEY": "your_model_key"
+        "YML": "path/to/yml"
       }
     }
   }
