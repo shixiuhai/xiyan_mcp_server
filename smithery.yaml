@@ -8,9 +8,10 @@ startCommand:
     # A function that produces the CLI command to start the MCP on stdio.
     |-
     (config) => ({
-      "command": "node",
+      "command": "python",
       "args": [
-        "dist/index.js"
+        "-m",
+        "xiyan-mcp-server"
       ],
       "env": {
       }

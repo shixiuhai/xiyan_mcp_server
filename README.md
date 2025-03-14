@@ -2,7 +2,7 @@
 
 # XiYan MCP Server
 
-A Model Context Protocol (MCP) server that enables natural language queries to MySQL databases, power by XiYanSQL as text-to-sql technique.
+A Model Context Protocol (MCP) server that enables natural language queries to MySQL databases, power by XiYanSQL(https://github.com/XGenerationLab/XiYan-SQL) as text-to-sql technique.
 
 
 ## Features
@@ -12,74 +12,102 @@ A Model Context Protocol (MCP) server that enables natural language queries to M
 
 ## Installation
 
-Python 3.11+ is required.
+Python 3.11+ is required. 
+you can install the server by a pre-release verion
 
 ```bash
-pip install xiyan-mcp-server
+pip install xiyan_mcp_server-0.1.0-py3-none-any
 ```
+
+After that you can directly run the server by:
+```bash
+python -m xiyan_mcp_server
+```
+But it does not provide any functions until you complete following config.
+You will get a yml file. After that you can run the server by:
+```yaml
+env YML=path/to/yml python -m xiyan_mcp_server
+```
+
 
 ## Configuration
 
-Set the following environment variables:
+You need a yml config file to configure the server.
+a default config file is provided in config_demo.yml which looks like this:
 
-```bash
-YML=    # yml config file path
+```yaml
+model:
+  name: "pre-xiyan_multi_dialect_v3"
+  key: ""
+  url: "https://poc-dashscope.aliyuncs.com/compatible-mode/v1"
+
+database:
+  host: "localhost"
+  port: 3306
+  user: "root"
+  password: ""
+  database: ""
 ```
 
-see config_demo.yml for example
+### About LLM
+Name is the name of the model to use, key is the API key of the model, url is the API url of the model. 
+#### Using general LLMs
+if you want to use the general LLMs, e.g. gpt3.5, you can directly config like this:
+```yaml
+model:
+  name: "gpt-3.5-turbo"
+  key: "YOUR KEY "
+  url: "https://api.openai.com/v1/chat/completions"
+database:
+```
 
-## Models
+if you want to use Qwen from alibaba, e.g. Qwen-max,
+```yaml
+model:
+  name: "qwen-max"
+  key: "YOUR KEY "
+  url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+database:
+```
+#### Using Text-to-SQL SOTA model
+Last, we recommend the XiYanSQL-qwencoder-32B (https://github.com/XGenerationLab/XiYanSQL-QwenCoder), which is the SOTA model in text-to-sql.
+We deployed the model on DashScope, so you need to set the following environment variables:
+Contact us to get the key.
+```yaml
+model:
+  name: "pre-xiyan_multi_dialect_v3"
+  key: "KEY"
+  url: "https://poc-dashscope.aliyuncs.com/compatible-mode/v1"
+database:
+```
 
-Any LLMs are supported as long as they support the `chat` API. 
-We recommend using xiyansql-qwencoder-32b (https://github.com/XGenerationLab/XiYanSQL-QwenCoder) for best performance.
+#### Local LLMs
+To support in the future.
 
-## Usage
+### About the database
+host, port, user, password, database are the connection information of the MySQL database.
 
-### With Claude Desktop
+You can use local or any remote databases. Currently we support MySQL (more dialects soon)
+```yaml
+database:
+  host: "localhost"
+  port: 3306
+  user: "root"
+  password: ""
+  database: ""
+```
 
-Add this to your `claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "xiyan": {
-      "command": "uv",
-      "args": [
-        "--directory", 
-        "path/to/xiyan_mcp_server",
-        "run",
-        "xiyan_mcp_server"
-      ],
-      "env": {
-        "YML": "path/to/yml"
-      }
-    }
-  }
+## Citation
+If you find our work helpful, feel free to give us a cite.
+```bib
+@article{xiyansql,
+      title={A Preview of XiYan-SQL: A Multi-Generator Ensemble Framework for Text-to-SQL}, 
+      author={Yingqi Gao and Yifu Liu and Xiaoxia Li and Xiaorong Shi and Yin Zhu and Yiming Wang and Shiqi Li and Wei Li and Yuntao Hong and Zhiling Luo and Jinyang Gao and Liyu Mou and Yu Li},
+      year={2024},
+      journal={arXiv preprint arXiv:2411.08599},
+      url={https://arxiv.org/abs/2411.08599},
+      primaryClass={cs.AI}
 }
 ```
 
-### As a standalone server
 
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the server
-python -m xiyan_mcp_server
-```
-
-## Development
-
-```bash
-# Clone the repository
-git clone https://github.com/XGenerationLab/xiyan_mcp_server.git
-cd xiyan_mcp_server
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # or `venv\Scripts\activate` on Windows
-
-# Install development dependencies
-pip install -r requirements.txt
-
-```
