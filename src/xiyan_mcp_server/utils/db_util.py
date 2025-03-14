@@ -3,7 +3,7 @@ import os
 import datetime, decimal
 from sqlalchemy import create_engine, MetaData, Table, Column, String, Integer, select, text
 from sqlalchemy.engine import Engine
-from config.db_config import DBConfig
+from .db_config import DBConfig
 
 
 def init_db_conn(db_config: DBConfig) -> Engine:

@@ -1,6 +1,6 @@
 import random
-from utils.file_util import read_json_file, write_json_to_file, save_raw_text
-from utils.db_util import examples_to_str
+from .file_util import read_json_file, write_json_to_file, save_raw_text
+from .db_util import examples_to_str
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 
 

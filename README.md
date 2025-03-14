@@ -12,6 +12,8 @@ A Model Context Protocol (MCP) server that enables natural language queries to M
 
 ## Installation
 
+Python 3.11+ is required.
+
 ```bash
 pip install xiyan-mcp-server
 ```

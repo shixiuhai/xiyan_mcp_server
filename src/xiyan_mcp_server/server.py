@@ -5,12 +5,12 @@ import yaml  # 添加yaml库导入
 from mysql.connector import connect, Error
 from mcp.server import  FastMCP
 from mcp.types import TextContent
-from config.db_config import DBConfig
-from database_env import DataBaseEnv
-from datasource.db_source import HITLSQLDatabase
-from utils.db_util import init_db_conn
-from utils.file_util import extract_sql_from_qwen
-from utils.llm_util import call_dashscope
+from .utils.db_config import DBConfig
+from .database_env import DataBaseEnv
+from .utils.db_source import HITLSQLDatabase
+from .utils.db_util import init_db_conn
+from .utils.file_util import extract_sql_from_qwen
+from .utils.llm_util import call_dashscope
 
 mcp = FastMCP("xiyan")
 

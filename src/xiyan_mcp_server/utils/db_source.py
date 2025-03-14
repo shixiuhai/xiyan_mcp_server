@@ -4,8 +4,8 @@ from llama_index.core import SQLDatabase
 from sqlalchemy import MetaData, Table, select, text
 from sqlalchemy.engine import Engine
 
-from datasource.db_mschema import MSchema
-from utils.db_util import examples_to_str, preprocess_sql_query
+from .db_mschema import MSchema
+from .db_util import examples_to_str, preprocess_sql_query
 
 
 class HITLSQLDatabase(SQLDatabase):
