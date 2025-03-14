@@ -180,9 +180,11 @@ def get_data_via_natural_language(query: str)-> list[TextContent]:
     res=call_xiyan(query)
     return [TextContent(type="text", text=res)]
 
+def main():
+    mcp.run()
 
 
 if __name__ == "__main__":
 
-    mcp.run()
+    main()
 

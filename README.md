@@ -1,3 +1,4 @@
+[![smithery badge](https://smithery.ai/badge/@XGenerationLab/xiyan_mcp_server)](https://smithery.ai/server/@XGenerationLab/xiyan_mcp_server)
 
 # XiYan MCP Server
 
