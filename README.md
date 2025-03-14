@@ -16,7 +16,7 @@ Python 3.11+ is required.
 you can install the server by a pre-release verion
 
 ```bash
-pip install xiyan_mcp_server-0.1.0-py3-none-any
+pip install xiyan_mcp_server-0.1.0-py3-none-any.whl
 ```
 
 After that you can directly run the server by:
