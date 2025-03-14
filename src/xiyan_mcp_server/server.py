@@ -23,7 +23,7 @@ logging.basicConfig(
 logger = logging.getLogger("xiyan_mcp_server")
 
 def get_yml_config():
-    config_path = os.getenv("YML","")
+    config_path = os.getenv("YML", os.path.join(os.path.dirname(__file__), "config_demo.yml"))
     try:
         with open(config_path, 'r') as file:
             config = yaml.safe_load(file)
@@ -82,7 +82,7 @@ def sql_gen_and_execute(db_env, query: str):
     """
 
     #db_env = context_variables.get('db_env', None)
-    prompt = f"""你现在是一名{db_env.dialect}数据分析专家，你的任务是根据参考的数据库schema和用户的问题，编写正确的SQL来回答用户的问题，生成的SQL用```sql 和```包围起来。
+    prompt = f"""你现在是一名{db_env.dialect}数据分析专家，你的任务是根据参考的数据库schema和用户的问题，编写正确的SQL来回答用户的问题，生成的SQL用``sql 和```包围起来。
 【数据库schema】
 {db_env.mschema_str}
 
