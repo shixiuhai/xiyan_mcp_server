@@ -6,7 +6,7 @@
 
 [![smithery badge](https://smithery.ai/badge/@XGenerationLab/xiyan_mcp_server)](https://smithery.ai/server/@XGenerationLab/xiyan_mcp_server)
 
-[English](https://github.com/XGenerationLab/xiyan_mcp_server)  | [中文](https://github.com/XGenerationLab/xiyan_mcp_server/README_zh.md)
+[English](https://github.com/XGenerationLab/xiyan_mcp_server)  | [中文](https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/README_zh.md)
 
 
 # XiYan MCP Server
@@ -16,14 +16,19 @@ A Model Context Protocol (MCP) server that enables natural language queries to d
 
 We support MySQL database now and more dialects are coming soon.
 
-## Features
+## 1. Features
 - Fetch data by natural language through [XiYanSQL](https://github.com/XGenerationLab/XiYan-SQL)
 - List available MySQL tables as resources
 - Read table contents
 
+## 2. Tool Preview
+ - The tool ``get_data_via_natural_language`` provides a natural language interface for retrieving data from a database. This server will convert the input natural language into SQL using a built-in model and call the database to return the query results.
 
+ - The ``mysql://{table_name}`` resource allows obtaining a portion of sample data from the database for model reference when a specific table_name is specified.
+- The ``mysql://`` resource will list the names of the current databases
 
-## Installation
+## 3. Installation
+### 3.1 Install from pip
 
 Python 3.11+ is required. 
 you can install the server through pip, and it will install the latest verion
@@ -43,7 +48,12 @@ env YML=path/to/yml python -m xiyan-mcp-server
 ```
 
 
-## Configuration
+### 3.2 Install from Smithery.ai
+See [@XGenerationLab/xiyan_mcp_server](https://smithery.ai/server/@XGenerationLab/xiyan_mcp_server)
+
+Not fully tested.
+
+## 4. Configuration
 
 You need a yml config file to configure the server.
 a default config file is provided in config_demo.yml which looks like this:
@@ -62,7 +72,7 @@ database:
   database: ""
 ```
 
-### About LLM
+### 4.1 About LLM
 ``Name`` is the name of the model to use, ``key`` is the API key of the model, ``url`` is the API url of the model. We support following models.
 #### Using general LLMs
 if you want to use the general LLMs, e.g. gpt3.5, you can directly config like this:
@@ -97,7 +107,7 @@ database:
 #### Local LLMs
 To support in the future.
 
-### About the database
+### 4.2 About the database
 ``host``, ``port``, ``user``, ``password``, ``database`` are the connection information of the MySQL database.
 
 You can use local or any remote databases. Now we support MySQL (more dialects soon).
@@ -113,7 +123,7 @@ database:
 ```
 
 
-## Citation
+## 5. Citation
 If you find our work helpful, feel free to give us a cite.
 ```bib
 @article{xiyansql,
