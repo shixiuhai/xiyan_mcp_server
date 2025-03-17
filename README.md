@@ -9,27 +9,29 @@
 # XiYan MCP Server
 
 
-A Model Context Protocol (MCP) server that enables natural language queries to databases, power by XiYanSQL(https://github.com/XGenerationLab/XiYan-SQL) as text-to-sql technique.
+A Model Context Protocol (MCP) server that enables natural language queries to databases, power by [XiYanSQL](https://github.com/XGenerationLab/XiYan-SQL) as text-to-sql technique.
 
 We support MySQL database now and more dialects are coming soon.
 
 ## Features
-- Fetch data by natural language through XiYanSQL (https://github.com/XGenerationLab/XiYan-SQL)
+- Fetch data by natural language through [XiYanSQL](https://github.com/XGenerationLab/XiYan-SQL)
 - List available MySQL tables as resources
 - Read table contents
+
+
 
 ## Installation
 
 Python 3.11+ is required. 
-you can install the server by a pre-release verion
+you can install the server through pip, and it will install the latest verion
 
 ```bash
-pip install xiyan_mcp_server
+pip install xiyan-mcp-server
 ```
 
 After that you can directly run the server by:
 ```bash
-python -m xiyan_mcp_server
+python -m xiyan-mcp-server
 ```
 But it does not provide any functions until you complete following config.
 You will get a yml file. After that you can run the server by:
@@ -58,7 +60,7 @@ database:
 ```
 
 ### About LLM
-Name is the name of the model to use, key is the API key of the model, url is the API url of the model. 
+``Name`` is the name of the model to use, ``key`` is the API key of the model, ``url`` is the API url of the model. We support following models.
 #### Using general LLMs
 if you want to use the general LLMs, e.g. gpt3.5, you can directly config like this:
 ```yaml
@@ -80,7 +82,7 @@ database:
 #### Using Text-to-SQL SOTA model
 Last, we recommend the XiYanSQL-qwencoder-32B (https://github.com/XGenerationLab/XiYanSQL-QwenCoder), which is the SOTA model in text-to-sql.
 We deployed the model on DashScope, so you need to set the following environment variables:
-Contact us to get the key.
+Contact us to get the ``key``.
 ```yaml
 model:
   name: "pre-xiyan_multi_dialect_v3"
@@ -93,9 +95,11 @@ database:
 To support in the future.
 
 ### About the database
-host, port, user, password, database are the connection information of the MySQL database.
+``host``, ``port``, ``user``, ``password``, ``database`` are the connection information of the MySQL database.
 
-You can use local or any remote databases. Currently we support MySQL (more dialects soon)
+You can use local or any remote databases. Now we support MySQL (more dialects soon).
+
+
 ```yaml
 database:
   host: "localhost"
@@ -104,6 +108,7 @@ database:
   password: ""
   database: ""
 ```
+
 
 ## Citation
 If you find our work helpful, feel free to give us a cite.

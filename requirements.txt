@@ -4,3 +4,4 @@ sqlalchemy
 llama_index
 yaml
 pandas
+pymysql
