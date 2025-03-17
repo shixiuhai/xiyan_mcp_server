@@ -1,12 +1,20 @@
+
+[💻 XiYan-mcp-server](https://github.com/XGenerationLab/xiyan_mcp_server) | 
+[💻 XiYan-SQL](https://github.com/XGenerationLab/XiYan-SQL) |
+[📖 Arxiv](https://arxiv.org/abs/2411.08599)| 
+[📄 PapersWithCode](https://paperswithcode.com/paper/xiyan-sql-a-multi-generator-ensemble)
+
 [![smithery badge](https://smithery.ai/badge/@XGenerationLab/xiyan_mcp_server)](https://smithery.ai/server/@XGenerationLab/xiyan_mcp_server)
 
 # XiYan MCP Server
 
-A Model Context Protocol (MCP) server that enables natural language queries to MySQL databases, power by XiYanSQL(https://github.com/XGenerationLab/XiYan-SQL) as text-to-sql technique.
 
+A Model Context Protocol (MCP) server that enables natural language queries to databases, power by XiYanSQL(https://github.com/XGenerationLab/XiYan-SQL) as text-to-sql technique.
+
+We support MySQL database now and more dialects are coming soon.
 
 ## Features
-- Fetch data by natural language throught XiYanSQL (https://github.com/XGenerationLab/XiYan-SQL)
+- Fetch data by natural language through XiYanSQL (https://github.com/XGenerationLab/XiYan-SQL)
 - List available MySQL tables as resources
 - Read table contents
 
@@ -16,7 +24,7 @@ Python 3.11+ is required.
 you can install the server by a pre-release verion
 
 ```bash
-pip install xiyan_mcp_server-0.1.0-py3-none-any.whl
+pip install xiyan_mcp_server
 ```
 
 After that you can directly run the server by:

@@ -1,14 +1,15 @@
 [project]
 name = "xiyan_mcp_server"
-version = "0.1.0"
-description = "A Model Context Protocol (MCP) server that using XiyanSQL with MySQL databases. This server allows AI assistants to list tables, read data, and execute natual language queries."
+version = "0.1.1"
+description = "A Model Context Protocol (MCP) server that utilizes XiyanSQL with databases. This server enables AI assistants to list tables, read data, and execute natural language queries"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "mcp>=1.0.0",
     "mysql-connector-python>=9.1.0",
     "llama_index",
-    "sqlalchemy"
+    "sqlalchemy",
+    "pymysql"
 ]
 [[project.authors]]
 name = "Zhiling Luo"
