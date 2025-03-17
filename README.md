@@ -6,6 +6,9 @@
 
 [![smithery badge](https://smithery.ai/badge/@XGenerationLab/xiyan_mcp_server)](https://smithery.ai/server/@XGenerationLab/xiyan_mcp_server)
 
+[English](https://github.com/XGenerationLab/xiyan_mcp_server)  | [中文](https://github.com/XGenerationLab/xiyan_mcp_server/README_zh.md)
+
+
 # XiYan MCP Server
 
 
@@ -36,7 +39,7 @@ python -m xiyan-mcp-server
 But it does not provide any functions until you complete following config.
 You will get a yml file. After that you can run the server by:
 ```yaml
-env YML=path/to/yml python -m xiyan_mcp_server
+env YML=path/to/yml python -m xiyan-mcp-server
 ```
 
 
