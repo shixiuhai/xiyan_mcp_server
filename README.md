@@ -12,7 +12,7 @@
 # XiYan MCP Server
 
 
-A Model Context Protocol (MCP) server that enables natural language queries to databases, powered by [XiYanSQL](https://github.com/XGenerationLab/XiYan-SQL) as text-to-sql technique.
+A Model Context Protocol (MCP) server that enables natural language queries to databases, powered by [XiYanSQL](https://github.com/XGenerationLab/XiYan-SQL) as text-to-sql technique (SOTA of text-to-sql open benchmarks).
 
 We support MySQL database now and more dialects are coming soon.
 
