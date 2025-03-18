@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='xiyan_mcp_server',  # 包的名字
-    version='0.1.0',  # 版本号
+    version='0.1.1',  # 版本号
     packages=find_packages(),  # 自动找到项目中的包
     install_requires=[  # 必要的包依赖
         # 'numpy',  # 示例：若有依赖包，将其列在此
@@ -11,7 +11,8 @@ setup(
 'sqlalchemy',
 'llama_index',
 'yaml',
-'pandas'
+'pandas',
+'pymysql'
     ],
     author='Bruce Luo',  # 作者
     author_email='godot.lzl@alibaba-inc.com',  # 作者邮箱

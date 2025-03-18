@@ -12,7 +12,7 @@
 # XiYan MCP Server
 
 
-A Model Context Protocol (MCP) server that enables natural language queries to databases, power by [XiYanSQL](https://github.com/XGenerationLab/XiYan-SQL) as text-to-sql technique.
+A Model Context Protocol (MCP) server that enables natural language queries to databases, powered by [XiYanSQL](https://github.com/XGenerationLab/XiYan-SQL) as text-to-sql technique.
 
 We support MySQL database now and more dialects are coming soon.
 
@@ -39,12 +39,12 @@ pip install xiyan-mcp-server
 
 After that you can directly run the server by:
 ```bash
-python -m xiyan-mcp-server
+python -m xiyan_mcp_server
 ```
 But it does not provide any functions until you complete following config.
 You will get a yml file. After that you can run the server by:
 ```yaml
-env YML=path/to/yml python -m xiyan-mcp-server
+env YML=path/to/yml python -m xiyan_mcp_server
 ```
 
 
@@ -94,8 +94,8 @@ database:
 ```
 #### Using Text-to-SQL SOTA model
 Last, we recommend the XiYanSQL-qwencoder-32B (https://github.com/XGenerationLab/XiYanSQL-QwenCoder), which is the SOTA model in text-to-sql.
-We deployed the model on DashScope, so you need to set the following environment variables:
-Contact us to get the ``key``.
+We deployed the model on Alibaba Cloud DashScope, so you need to set the following environment variables:
+Contact us to get the ``key``. ( godot.lzl@alibaba-inc.com )
 ```yaml
 model:
   name: "pre-xiyan_multi_dialect_v3"
@@ -103,6 +103,8 @@ model:
   url: "https://poc-dashscope.aliyuncs.com/compatible-mode/v1"
 database:
 ```
+
+Alternatively, you can also deploy the model (XiYanSQL-qwencoder-32B) on your own server.
 
 #### Local LLMs
 To support in the future.

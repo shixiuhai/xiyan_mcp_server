@@ -92,9 +92,11 @@ model:
 database:
 ```
 #### 使用文本到 SQL 的 SOTA 模型
-最后，我们推荐使用 XiYanSQL-qwencoder-32B (https://github.com/XGenerationLab/XiYanSQL-QwenCoder)，这是文本到 SQL 的 SOTA 模型。
+最后，我们推荐使用 XiYanSQL-qwencoder-32B (https://github.com/XGenerationLab/XiYanSQL-QwenCoder)，这是文本到 SQL 的 SOTA 模型，而且我们将其开源了。
 我们将模型部署在 DashScope 上，因此您需要设置以下环境变量：
-请联系我们以获取 ``key``。
+请联系我们以获取 ``key``。( godot.lzl@alibaba-inc.com )
+
+
 ```yaml
 model:
   name: "pre-xiyan_multi_dialect_v3"
@@ -102,6 +104,8 @@ model:
   url: "https://poc-dashscope.aliyuncs.com/compatible-mode/v1"
 database:
 ```
+
+当然你也可以自己部署XiYanSQL-qwencoder-32B在任何有足够GPU配置的机器上，并以openai sdk的方式对外提供服务，就可以接入本MCP server
 
 #### 本地 LLM
 未来将支持。
