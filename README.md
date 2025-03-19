@@ -11,9 +11,20 @@
 💻 <a href="https://github.com/XGenerationLab/xiyan_mcp_server" >XiYan-mcp-server</a> | 
 🌐 <a href="https://github.com/XGenerationLab/https://github.com/XGenerationLab/XiYan-SQL" >XiYan-SQL</a> |
 📖 <a href="https://arxiv.org/abs/2411.08599"> Arxiv</a> | 
-📄 <a href="https://paperswithcode.com/paper/xiyan-sql-a-multi-generator-ensemble" >PapersWithCode</a> <br />
-  <a href="https://smithery.ai/server/@XGenerationLab/xiyan_mcp_server"><img alt="Smithery Installs" src="https://smithery.ai/badge/@XGenerationLab/xiyan_mcp_server" height="20"/></a><br />
-<a href="https://github.com/XGenerationLab/xiyan_mcp_server" >English</a> | <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/README_zh.md"> 中文 </a>
+📄 <a href="https://paperswithcode.com/paper/xiyan-sql-a-multi-generator-ensemble" >PapersWithCode</a>
+💻 <a href="https://huggingface.co/collections/XGenerationLab/xiyansql-models-67c9844307b49f87436808fc">HuggingFace</a> |
+🤖 <a href="https://modelscope.cn/collections/XiYanSQL-Models-4483337b614241" >ModelScope</a> |
+🌕 <a href="https://bailian.console.aliyun.com/xiyan">析言GBI</a> 
+<br />
+<a href="https://pepy.tech/projects/xiyan-mcp-server"><img src="https://static.pepy.tech/badge/xiyan-mcp-server" alt="PyPI Downloads"></a>
+  <a href="https://smithery.ai/server/@XGenerationLab/xiyan_mcp_server"><img alt="Smithery Installs" src="https://smithery.ai/badge/@XGenerationLab/xiyan_mcp_server" height="20"/></a>
+<a href="https://github.com/XGenerationLab/xiyan_mcp_server" target="_blank">
+    <img src="https://img.shields.io/github/stars/XGenerationLab/xiyan_mcp_server?style=social" alt="GitHub stars" />
+</a>
+<br />
+<a href="https://github.com/XGenerationLab/xiyan_mcp_server" >English</a> | <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/README_zh.md"> 中文 </a><br />
+<a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/dinggroup_out.png">Ding Group钉钉群</a>｜ 
+<a href="https://weibo.com/u/2540915670" target="_blank">Follow me on Weibo</a>
 </p>
 
 
@@ -78,7 +89,7 @@ a default config file is provided in config_demo.yml which looks like this:
 
 ```yaml
 model:
-  name: "pre-xiyan_multi_dialect_v3"
+  name: "pre-xiyansql-qwencoder-32b"
   key: ""
   url: "https://poc-dashscope.aliyuncs.com/compatible-mode/v1"
 
@@ -98,11 +109,11 @@ if you want to use the general LLMs, e.g. gpt3.5, you can directly config like t
 model:
   name: "gpt-3.5-turbo"
   key: "YOUR KEY "
-  url: "https://api.openai.com/v1/chat/completions"
+  url: "https://api.openai.com/v1"
 database:
 ```
 
-if you want to use Qwen from alibaba, e.g. Qwen-max,
+if you want to use Qwen from alibaba, e.g. Qwen-max, you can use following config.
 ```yaml
 model:
   name: "qwen-max"
@@ -111,16 +122,26 @@ model:
 database:
 ```
 #### Text-to-SQL SOTA model
-Last, we recommend the XiYanSQL-qwencoder-32B (https://github.com/XGenerationLab/XiYanSQL-QwenCoder), which is the SOTA model in text-to-sql.
+Last, we recommend the XiYanSQL-qwencoder-32B (https://github.com/XGenerationLab/XiYanSQL-QwenCoder), which is the SOTA model in text-to-sql, see [Bird benchmark](https://bird-bench.github.io/).
 We deployed the model on Alibaba Cloud DashScope, so you need to set the following environment variables:
-Contact us to get the ``key``. ( godot.lzl@alibaba-inc.com )
+Send me your email to get the ``key``. ( godot.lzl@alibaba-inc.com )
+In the email, please attach the following information:
+```yaml
+name: "YOUR NAME",
+email: "YOUR EMAIL",
+organization: "your college or Company or Organization"
+```
+We will send you a ``key`` according to your email. And you can fill the ``env`` in the yml file.
+
 ```yaml
 model:
-  name: "pre-xiyan_multi_dialect_v3"
+  name: "pre-xiyansql-qwencoder-32b"
   key: "KEY"
   url: "https://poc-dashscope.aliyuncs.com/compatible-mode/v1"
 database:
 ```
+
+Note: this model service is just for trial, if you need to use it in production, please contact us.
 
 Alternatively, you can also deploy the model (XiYanSQL-qwencoder-32B) on your own server.
 
@@ -161,6 +182,13 @@ Add this in your claude desktop config file
     }
 }
 ```
+### Goose
+Add following command in the config.
+
+```yaml
+env YML=path/to/yml python -m xiyan_mcp_server
+```
+
 
 ## Citation
 If you find our work helpful, feel free to give us a cite.
