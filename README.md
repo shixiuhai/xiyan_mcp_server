@@ -43,6 +43,7 @@
   - [Database Configuration](#database-configuration)
 - [Launch](#launch)
   - [Claude Desktop](#claude-desktop)
+  - [Goose](#goose)
 - [Citation](#citation)
 
 
@@ -91,7 +92,7 @@ a default config file is provided in config_demo.yml which looks like this:
 model:
   name: "pre-xiyansql-qwencoder-32b"
   key: ""
-  url: "https://poc-dashscope.aliyuncs.com/compatible-mode/v1"
+  url: "https://pre-xiyan-stream.biz.aliyun.com/service/api/xiyan-sql"
 
 database:
   host: "localhost"
@@ -131,19 +132,21 @@ name: "YOUR NAME",
 email: "YOUR EMAIL",
 organization: "your college or Company or Organization"
 ```
-We will send you a ``key`` according to your email. And you can fill the ``env`` in the yml file.
+We will send you a ``key`` according to your email. And you can fill the ``key`` in the yml file.
+The ``key`` will be expired by  1 month or 200 queries or other legal restrictions.
+
 
 ```yaml
 model:
   name: "pre-xiyansql-qwencoder-32b"
   key: "KEY"
-  url: "https://poc-dashscope.aliyuncs.com/compatible-mode/v1"
+  url: "https://pre-xiyan-stream.biz.aliyun.com/service/api/xiyan-sql"
 database:
 ```
 
 Note: this model service is just for trial, if you need to use it in production, please contact us.
 
-Alternatively, you can also deploy the model (XiYanSQL-qwencoder-32B) on your own server.
+Alternatively, you can also deploy the model [XiYanSQL-qwencoder-32B](https://github.com/XGenerationLab/XiYanSQL-QwenCoder) on your own server.
 
 #### Local LLMs
 To support in the future.
