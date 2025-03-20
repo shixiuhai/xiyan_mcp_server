@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='xiyan_mcp_server',  # 包的名字
-    version='0.1.1',  # 版本号
+    version='0.1.2',  # 版本号
     packages=find_packages(),  # 自动找到项目中的包
     install_requires=[  # 必要的包依赖
         # 'numpy',  # 示例：若有依赖包，将其列在此

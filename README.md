@@ -59,7 +59,7 @@
 - 🔧 Read table contents
 
 ## Tool Preview
- - The tool ``get_data_via_natural_language`` provides a natural language interface for retrieving data from a database. This server will convert the input natural language into SQL using a built-in model and call the database to return the query results.
+ - The tool ``get_data`` provides a natural language interface for retrieving data from a database. This server will convert the input natural language into SQL using a built-in model and call the database to return the query results.
 
  - The ``mysql://{table_name}`` resource allows obtaining a portion of sample data from the database for model reference when a specific table_name is specified.
 - The ``mysql://`` resource will list the names of the current databases
@@ -200,7 +200,7 @@ database:
 
 ## Launch
 ### Claude desktop
-Add this in your claude desktop config file
+Add this in your claude desktop config file, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/claude_desktop.jpg">claude desktop config example</a>
 ```json
 {
     "mcpServers": {
@@ -221,15 +221,22 @@ Add this in your claude desktop config file
 prepare the config like [Claude desktop](#claude-desktop)
 
 ### Goose
-Add following command in the config.
+Add following command in the config, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/goose.jpg">goose config example</a>
 
 ```yaml
 env YML=path/to/yml python -m xiyan_mcp_server
 ```
-
 ### Cursor
-use the same command like [Goose](#goose)
+Use the same command like [Goose](#goose) .
 
+
+### Witsy
+Add following in command.
+```yaml
+python -m xiyan_mcp_server
+```
+Add an env: key is YML and value is the path to your yml file.
+Ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/witsy.jpg">witsy config example</a>
 ## It does not work!
 contact us:
 <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/dinggroup_out.png">Ding Group钉钉群</a>｜ 
