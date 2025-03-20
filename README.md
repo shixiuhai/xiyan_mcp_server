@@ -46,7 +46,10 @@
   - [Database Configuration](#database-configuration)
 - [Launch](#launch)
   - [Claude Desktop](#claude-desktop)
+  - [Cline](#cline)
   - [Goose](#goose)
+  - [Cursor](#cursor)
+- [It Does Not Work](#it-does-not-work)
 - [Citation](#citation)
 
 
@@ -93,9 +96,9 @@ a default config file is provided in config_demo.yml which looks like this:
 
 ```yaml
 model:
-  name: "pre-xiyansql-qwencoder-32b"
+  name: "XGenerationLab/XiYanSQL-QwenCoder-32B-2412"
   key: ""
-  url: "https://pre-xiyan-stream.biz.aliyun.com/service/api/xiyan-sql"
+  url: "https://api-inference.modelscope.cn/v1/"
 
 database:
   host: "localhost"
@@ -107,6 +110,14 @@ database:
 
 ### LLM Configuration
 ``Name`` is the name of the model to use, ``key`` is the API key of the model, ``url`` is the API url of the model. We support following models.
+
+| versions | general LLMs(GPT,qwenmax)                                             | SOTA model by Modelscope                   | SOTA model by Dashscope                                   | 
+|----------|-------------------------------|--------------------------------------------|-----------------------------------------------------------|
+| description| basic, easy to use | best performance, stable, recommand        | best performance, for trial                               |
+| name     | the official model name (e.g. gpt-3.5-turbo,qwen-max)                 | XGenerationLab/XiYanSQL-QwenCoder-32B-2412 | xiyansql-qwencoder-32b                                    | 
+| key      | the API key of the service provider (e.g. OpenAI, Alibaba Cloud)      | the API key of modelscope                  | the API key via email                                     |
+| url      | the endpoint of the service provider (e.g."https://api.openai.com/v1") | https://api-inference.modelscope.cn/v1/    | https://xiyan-stream.biz.aliyun.com/service/api/xiyan-sql |
+
 #### general LLMs
 if you want to use the general LLMs, e.g. gpt3.5, you can directly config like this:
 ```yaml
@@ -126,7 +137,25 @@ model:
 database:
 ```
 #### Text-to-SQL SOTA model
-Last, we recommend the XiYanSQL-qwencoder-32B (https://github.com/XGenerationLab/XiYanSQL-QwenCoder), which is the SOTA model in text-to-sql, see [Bird benchmark](https://bird-bench.github.io/).
+We recommend the XiYanSQL-qwencoder-32B (https://github.com/XGenerationLab/XiYanSQL-QwenCoder), which is the SOTA model in text-to-sql, see [Bird benchmark](https://bird-bench.github.io/).
+There are two ways to use the model. You can use either of them.
+(1) [Modelscope](https://www.modelscope.cn/models/XGenerationLab/XiYanSQL-QwenCoder-32B-2412),  (2) Alibaba Cloud DashScope.
+
+
+##### (1) Modelscope version
+You need to apply a ``key`` of API-inference from Modelscope, https://www.modelscope.cn/docs/model-service/API-Inference/intro
+Then you can use the following config:
+```yaml
+model:
+  name: "XGenerationLab/XiYanSQL-QwenCoder-32B-2412"
+  key: ""
+  url: "https://api-inference.modelscope.cn/v1/"
+```
+
+Read our [model description](https://www.modelscope.cn/models/XGenerationLab/XiYanSQL-QwenCoder-32B-2412) for more details. 
+
+##### (2) Dashscope version
+
 We deployed the model on Alibaba Cloud DashScope, so you need to set the following environment variables:
 Send me your email to get the ``key``. ( godot.lzl@alibaba-inc.com )
 In the email, please attach the following information:
@@ -141,9 +170,9 @@ The ``key`` will be expired by  1 month or 200 queries or other legal restrictio
 
 ```yaml
 model:
-  name: "pre-xiyansql-qwencoder-32b"
+  name: "xiyansql-qwencoder-32b"
   key: "KEY"
-  url: "https://pre-xiyan-stream.biz.aliyun.com/service/api/xiyan-sql"
+  url: "https://xiyan-stream.biz.aliyun.com/service/api/xiyan-sql"
 database:
 ```
 
@@ -188,12 +217,23 @@ Add this in your claude desktop config file
     }
 }
 ```
+### Cline
+prepare the config like [Claude desktop](#claude-desktop)
+
 ### Goose
 Add following command in the config.
 
 ```yaml
 env YML=path/to/yml python -m xiyan_mcp_server
 ```
+
+### Cursor
+use the same command like [Goose](#goose)
+
+## It does not work!
+contact us:
+<a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/dinggroup_out.png">Ding Group钉钉群</a>｜ 
+<a href="https://weibo.com/u/2540915670" target="_blank">Follow me on Weibo</a>
 
 
 ## Citation
