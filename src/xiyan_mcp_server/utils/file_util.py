@@ -5,7 +5,7 @@ import pandas as pd
 import re
 
 def extract_sql_from_qwen(qwen_result) -> str:
-    sql = ''
+    sql = qwen_result
     pattern = r"```sql(.*?)```"
 
     # 使用re.DOTALL标志来使得点号(.)可以匹配包括换行符在内的任意字符

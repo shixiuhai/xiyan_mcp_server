@@ -3,7 +3,7 @@
   <a href="https://github.com/XGenerationLab/XiYan-SQL"><img alt="MCP Playwright" src="https://raw.githubusercontent.com/XGenerationLab/XiYan-SQL/main/xiyanGBI.png" height="60"/></a>
 </p>
 <p align="center">
-  <b>A Model Context Protocol (MCP) server that enables natural language queries to databases</b></br>
+  <b>A Model Context Protocol (MCP) server that enables natural language queries to databases</b><br/>
   <sub>powered by <a href="https://github.com/XGenerationLab/XiYan-SQL" >XiYan-SQL</a>, SOTA of text-to-sql on open benchmarks</sub>
 </p>
 
@@ -42,7 +42,7 @@
   - [LLM Configuration](#llm-configuration)
     - [General LLMs](#general-llms)
     - [Text-to-SQL SOTA model](#text-to-sql-sota-model)
-    - [Local LLMs](#local-llms)
+    - [Local Model](#local-model)
   - [Database Configuration](#database-configuration)
 - [Launch](#launch)
   - [Claude Desktop](#claude-desktop)
@@ -55,6 +55,8 @@
 
 ## Features
 - 🌐 Fetch data by natural language through [XiYanSQL](https://github.com/XGenerationLab/XiYan-SQL)
+- 🤖 Support general LLMs (GPT,qwenmax), Text-to-SQL SOTA model
+- 💻 Support pure local mode (high security!)
 - 🖱️ List available MySQL tables as resources
 - 🔧 Read table contents
 
@@ -111,14 +113,14 @@ database:
 ### LLM Configuration
 ``Name`` is the name of the model to use, ``key`` is the API key of the model, ``url`` is the API url of the model. We support following models.
 
-| versions | general LLMs(GPT,qwenmax)                                             | SOTA model by Modelscope                   | SOTA model by Dashscope                                   | 
-|----------|-------------------------------|--------------------------------------------|-----------------------------------------------------------|
-| description| basic, easy to use | best performance, stable, recommand        | best performance, for trial                               |
-| name     | the official model name (e.g. gpt-3.5-turbo,qwen-max)                 | XGenerationLab/XiYanSQL-QwenCoder-32B-2412 | xiyansql-qwencoder-32b                                    | 
-| key      | the API key of the service provider (e.g. OpenAI, Alibaba Cloud)      | the API key of modelscope                  | the API key via email                                     |
-| url      | the endpoint of the service provider (e.g."https://api.openai.com/v1") | https://api-inference.modelscope.cn/v1/    | https://xiyan-stream.biz.aliyun.com/service/api/xiyan-sql |
+| versions | general LLMs(GPT,qwenmax)                                             | SOTA model by Modelscope                   | SOTA model by Dashscope                                   | Local LLMs            |
+|----------|-------------------------------|--------------------------------------------|-----------------------------------------------------------|-----------------------|
+| description| basic, easy to use | best performance, stable, recommand        | best performance, for trial                               | slow, high-security   |
+| name     | the official model name (e.g. gpt-3.5-turbo,qwen-max)                 | XGenerationLab/XiYanSQL-QwenCoder-32B-2412 | xiyansql-qwencoder-32b                                    | xiyansql-qwencoder-3b |
+| key      | the API key of the service provider (e.g. OpenAI, Alibaba Cloud)      | the API key of modelscope                  | the API key via email                                     | ""                    |
+| url      | the endpoint of the service provider (e.g."https://api.openai.com/v1") | https://api-inference.modelscope.cn/v1/    | https://xiyan-stream.biz.aliyun.com/service/api/xiyan-sql | http://localhost:5090 |
 
-#### general LLMs
+#### General LLMs
 if you want to use the general LLMs, e.g. gpt3.5, you can directly config like this:
 ```yaml
 model:
@@ -180,8 +182,46 @@ Note: this model service is just for trial, if you need to use it in production,
 
 Alternatively, you can also deploy the model [XiYanSQL-qwencoder-32B](https://github.com/XGenerationLab/XiYanSQL-QwenCoder) on your own server.
 
-#### Local LLMs
-To support in the future.
+#### Local Model
+Note: local model is slow (about 12 seconds per query on my macbook).
+If your need stable and fast service, we still recommend to use the modelscope version.
+
+To run xiyan_mcp_server on local mode, you need 
+1) a PC/Mac with at least 16GB RAM
+2) 6GB disk space
+
+step1: Install additional python packages
+```bash
+pip install flask modelscope torch==2.2.2 accelerate>=0.26.0 numpy=2.2.3
+```
+
+step2: (optional) manully download the model
+We recommand [xiyansql-qwencoder-3b](https://www.modelscope.cn/models/XGenerationLab/XiYanSQL-QwenCoder-3B-2502/).
+You can manully download the model by
+```bash
+modelscope download --model XGenerationLab/XiYanSQL-QwenCoder-3B-2502
+```
+It will take you 6GB disk space.
+
+step4: download the script and run server. src/xiyan_mcp_server/local_xiyan_server.py
+
+
+
+```bash
+python local_xiyan_server.py
+```
+The server will be running on http://localhost:5090/
+
+step4: prepare config and run xiyan_mcp_server
+the config.yml should be like:
+```yml
+model:
+  name: "xiyansql-qwencoder-3b"
+  key: "KEY"
+  url: "http://127.0.0.1:5090"
+```
+
+Til now the local mode is ready.
 
 ### Database Configuration
 ``host``, ``port``, ``user``, ``password``, ``database`` are the connection information of the MySQL database.

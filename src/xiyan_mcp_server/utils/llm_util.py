@@ -1,7 +1,7 @@
 from openai import OpenAI
 
 
-def call_dashscope(**args):
+def call_openai_sdk(**args):
     key = args['key']
     base_url = args['url']
     client = OpenAI(

@@ -10,7 +10,7 @@ from .database_env import DataBaseEnv
 from .utils.db_source import HITLSQLDatabase
 from .utils.db_util import init_db_conn
 from .utils.file_util import extract_sql_from_qwen
-from .utils.llm_util import call_dashscope
+from .utils.llm_util import call_openai_sdk
 
 mcp = FastMCP("xiyan")
 
@@ -98,7 +98,7 @@ def sql_gen_and_execute(db_env, query: str):
     param = {"model": model_config['name'], "messages": messages,"key":model_config['key'],"url":model_config['url']}
 
     try:
-        response = call_dashscope(**param)
+        response = call_openai_sdk(**param)
         content = response.choices[0].message.content
         sql_query = extract_sql_from_qwen(content)
         status, res = db_env.database.fetch(sql_query)
@@ -142,7 +142,7 @@ def sql_fix(dialect: str, mschema: str, query: str, sql_query: str, error_info: 
     ]
     param = {"model": model_config['name'], "messages": messages,"key":model_config['key'],'url':model_config['url']}
 
-    response = call_dashscope(**param)
+    response = call_openai_sdk(**param)
     content = response.choices[0].message.content
     sql_query = extract_sql_from_qwen(content)
 
@@ -154,8 +154,6 @@ def call_xiyan(query: str)-> str:
     Args:
         query: The query in natual language
     """
-    #db_config = global_db_config
-    #xiyan_config = get_xiyan_config(db_config)
 
     logger.info(f"Calling tool with arguments: {query}")
     try:
@@ -170,7 +168,7 @@ def call_xiyan(query: str)-> str:
 
     return str(res)
 @mcp.tool()
-def get_data_via_natural_language(query: str)-> list[TextContent]:
+def get_data(query: str)-> list[TextContent]:
     """Fetch the data from database through a natural language query
 
     Args:
