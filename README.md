@@ -34,7 +34,10 @@
 ## Table of Contents
 
 - [Features](#features)
-- [Tool Preview](#tool-preview)
+- [Preview](#preview)
+  - [Architecture](#architecture)
+  - [Best Practice](#best-practice)
+  - [Tools Preview](#tools-preview)
 - [Installation](#installation)
   - [Installing from pip](#installing-from-pip)
   - [Installing from Smithery.ai](#installing-from-smitheryai)
@@ -63,7 +66,19 @@
 - 🖱️ List available tables as resources
 - 🔧 Read table contents
 
-## Tool Preview
+## Preview
+### Architecture
+There are two ways to integrate this server in your project, as shown below:
+The left is remote mode, which is the default mode. It requires an API key to access the xiyanSQL-qwencoder-32B model from service provider (see [Configuration](#Configuration)).
+Another mode is local mode, which is more secure. It does not require an API key.
+
+![architecture.png](imgs/architecture.png)
+### Best practice
+
+[Build a local data assistant using MCP + Magic Dock API-Inference without writing a single line of code](https://mp.weixin.qq.com/s/tzDelu0W4w6t9C0_yYRbHA)
+
+
+### Tools Preview
  - The tool ``get_data`` provides a natural language interface for retrieving data from a database. This server will convert the input natural language into SQL using a built-in model and call the database to return the query results.
 
  - The ``{dialect}://{table_name}`` resource allows obtaining a portion of sample data from the database for model reference when a specific table_name is specified. 
