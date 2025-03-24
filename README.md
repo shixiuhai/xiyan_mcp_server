@@ -75,7 +75,7 @@ Another mode is local mode, which is more secure. It does not require an API key
 ![architecture.png](imgs/architecture.png)
 ### Best practice
 
-[Build a local data assistant using MCP + Magic Dock API-Inference without writing a single line of code](https://mp.weixin.qq.com/s/tzDelu0W4w6t9C0_yYRbHA)
+[Build a local data assistant using MCP + Modelscope API-Inference without writing a single line of code](https://mp.weixin.qq.com/s/tzDelu0W4w6t9C0_yYRbHA)
 
 
 ### Tools Preview
