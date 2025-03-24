@@ -38,7 +38,8 @@ def get_yml_config():
 
 
 def get_xiyan_config(db_config):
-    xiyan_db_config = DBConfig(dialect='mysql',db_name=db_config['database'], user_name=db_config['user'], db_pwd=db_config['password'], db_host=db_config['host'], port=db_config['port'])
+    dialect = db_config.get('dialect','mysql')
+    xiyan_db_config = DBConfig(dialect=dialect,db_name=db_config['database'], user_name=db_config['user'], db_pwd=db_config['password'], db_host=db_config['host'], port=db_config['port'])
     return xiyan_db_config
 
 
@@ -47,17 +48,17 @@ global_config = get_yml_config()
 model_config = global_config['model']
 global_db_config = global_config['database']
 global_xiyan_db_config = get_xiyan_config(global_db_config)
+dialect = global_db_config.get('dialect','mysql')
+#print("dialect is !!!!"+dialect)
 
-
-
-@mcp.resource('mysql://'+global_db_config['database'])
+@mcp.resource(dialect+'://'+global_db_config['database'])
 async def read_resource() -> str:
 
     db_engine = init_db_conn(global_xiyan_db_config)
     db_source = HITLSQLDatabase(db_engine)
     return db_source.mschema.to_mschema()
 
-@mcp.resource("mysql://{table_name}")
+@mcp.resource(dialect+"://{table_name}")
 async def read_resource(table_name) -> str:
     """Read table contents."""
     config = global_db_config

@@ -44,6 +44,8 @@
     - [Text-to-SQL SOTA model](#text-to-sql-sota-model)
     - [Local Model](#local-model)
   - [Database Configuration](#database-configuration)
+    - [MySQL](#mysql)
+    - [PostgreSQL](#postgresql)
 - [Launch](#launch)
   - [Claude Desktop](#claude-desktop)
   - [Cline](#cline)
@@ -57,14 +59,15 @@
 - 🌐 Fetch data by natural language through [XiYanSQL](https://github.com/XGenerationLab/XiYan-SQL)
 - 🤖 Support general LLMs (GPT,qwenmax), Text-to-SQL SOTA model
 - 💻 Support pure local mode (high security!)
-- 🖱️ List available MySQL tables as resources
+- 📝 Support MySQL and PostgreSQL.
+- 🖱️ List available tables as resources
 - 🔧 Read table contents
 
 ## Tool Preview
  - The tool ``get_data`` provides a natural language interface for retrieving data from a database. This server will convert the input natural language into SQL using a built-in model and call the database to return the query results.
 
- - The ``mysql://{table_name}`` resource allows obtaining a portion of sample data from the database for model reference when a specific table_name is specified.
-- The ``mysql://`` resource will list the names of the current databases
+ - The ``{dialect}://{table_name}`` resource allows obtaining a portion of sample data from the database for model reference when a specific table_name is specified. 
+- The ``{dialect}://`` resource will list the names of the current databases
 
 ## Installation
 ### Installing from pip
@@ -224,10 +227,11 @@ model:
 Til now the local mode is ready.
 
 ### Database Configuration
-``host``, ``port``, ``user``, ``password``, ``database`` are the connection information of the MySQL database.
+``host``, ``port``, ``user``, ``password``, ``database`` are the connection information of the database.
 
-You can use local or any remote databases. Now we support MySQL (more dialects soon).
+You can use local or any remote databases. Now we support MySQL and PostgreSQL(more dialects soon).
 
+#### MySQL
 
 ```yaml
 database:
@@ -237,7 +241,23 @@ database:
   password: ""
   database: ""
 ```
+#### PostgreSQL
+step1: Install python packages
+```bash
+pip install psycopg2
+```
+step2: prepare the config.yml like this:
+```yaml
+database:
+  dialect: "postgresql"
+  host: "localhost"
+  port: 5432
+  user: ""
+  password: ""
+  database: ""
+```
 
+Note that ``dialect`` should be ``postgresql`` for postgresql.
 ## Launch
 ### Claude desktop
 Add this in your claude desktop config file, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/claude_desktop.jpg">claude desktop config example</a>
