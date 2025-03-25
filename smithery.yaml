@@ -13,6 +13,6 @@ startCommand:
       "command": "python",
       "args": [
         "-m",
-        "xiyan-mcp-server"
+        "xiyan_mcp_server"
       ]
     })
