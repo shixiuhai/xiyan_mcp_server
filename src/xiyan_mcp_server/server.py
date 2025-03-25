@@ -46,12 +46,13 @@ def get_xiyan_config(db_config):
 global_config = get_yml_config()
 #print(global_config)
 model_config = global_config['model']
-global_db_config = global_config['database']
+global_db_config = global_config.get('database')
+database_name = global_db_config.get('database','')
 global_xiyan_db_config = get_xiyan_config(global_db_config)
 dialect = global_db_config.get('dialect','mysql')
 #print("dialect is !!!!"+dialect)
 
-@mcp.resource(dialect+'://'+global_db_config['database'])
+@mcp.resource(dialect+'://'+global_xiyan_db_config)
 async def read_resource() -> str:
 
     db_engine = init_db_conn(global_xiyan_db_config)
