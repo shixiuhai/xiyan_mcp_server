@@ -16,6 +16,7 @@
 🤖 <a href="https://modelscope.cn/collections/XiYanSQL-Models-4483337b614241" >ModelScope</a> |
 🌕 <a href="https://bailian.console.aliyun.com/xiyan">析言GBI</a> 
 <br />
+<a href="https://arxiv.org/abs/2411.08599"><img src="imgs/Paper-Arxiv-orange.svg" ></a>
 <a href="https://opensource.org/licenses/Apache-2.0">
   <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License: Apache 2.0" />
 </a>
@@ -88,7 +89,7 @@ Another mode is local mode, which is more secure. It does not require an API key
 ### Installing from pip
 
 Python 3.11+ is required. 
-you can install the server through pip, and it will install the latest verion
+You can install the server through pip, and it will install the latest version:
 
 ```bash
 pip install xiyan-mcp-server
@@ -111,8 +112,8 @@ Not fully tested.
 
 ## Configuration
 
-You need a yml config file to configure the server.
-a default config file is provided in config_demo.yml which looks like this:
+You need a YAML config file to configure the server.
+A default config file is provided in config_demo.yml which looks like this:
 
 ```yaml
 model:
@@ -139,7 +140,7 @@ database:
 | url      | the endpoint of the service provider (e.g."https://api.openai.com/v1") | https://api-inference.modelscope.cn/v1/    | https://xiyan-stream.biz.aliyun.com/service/api/xiyan-sql | http://localhost:5090 |
 
 #### General LLMs
-if you want to use the general LLMs, e.g. gpt3.5, you can directly config like this:
+If you want to use the general LLMs, e.g. gpt3.5, you can directly config like this:
 ```yaml
 model:
   name: "gpt-3.5-turbo"
@@ -148,7 +149,7 @@ model:
 database:
 ```
 
-if you want to use Qwen from alibaba, e.g. Qwen-max, you can use following config.
+If you want to use Qwen from Alibaba, e.g. Qwen-max, you can use following config:
 ```yaml
 model:
   name: "qwen-max"
@@ -201,27 +202,27 @@ Note: this model service is just for trial, if you need to use it in production,
 Alternatively, you can also deploy the model [XiYanSQL-qwencoder-32B](https://github.com/XGenerationLab/XiYanSQL-QwenCoder) on your own server.
 
 #### Local Model
-Note: local model is slow (about 12 seconds per query on my macbook).
-If your need stable and fast service, we still recommend to use the modelscope version.
+Note: the local model is slow (about 12 seconds per query on my macbook).
+If you need a stable and fast service, we still recommend to use the modelscope version.
 
-To run xiyan_mcp_server on local mode, you need 
+To run xiyan_mcp_server in local mode, you need 
 1) a PC/Mac with at least 16GB RAM
 2) 6GB disk space
 
-step1: Install additional python packages
+Step 1: Install additional Python packages
 ```bash
 pip install flask modelscope torch==2.2.2 accelerate>=0.26.0 numpy=2.2.3
 ```
 
-step2: (optional) manully download the model
-We recommand [xiyansql-qwencoder-3b](https://www.modelscope.cn/models/XGenerationLab/XiYanSQL-QwenCoder-3B-2502/).
-You can manully download the model by
+Step 2: (optional) manually download the model
+We recommend [xiyansql-qwencoder-3b](https://www.modelscope.cn/models/XGenerationLab/XiYanSQL-QwenCoder-3B-2502/).
+You can manually download the model by
 ```bash
 modelscope download --model XGenerationLab/XiYanSQL-QwenCoder-3B-2502
 ```
 It will take you 6GB disk space.
 
-step4: download the script and run server. src/xiyan_mcp_server/local_xiyan_server.py
+Step 3: download the script and run server. src/xiyan_mcp_server/local_xiyan_server.py
 
 
 
@@ -230,7 +231,7 @@ python local_xiyan_server.py
 ```
 The server will be running on http://localhost:5090/
 
-step4: prepare config and run xiyan_mcp_server
+Step 4: prepare config and run xiyan_mcp_server
 the config.yml should be like:
 ```yml
 model:
@@ -239,7 +240,7 @@ model:
   url: "http://127.0.0.1:5090"
 ```
 
-Til now the local mode is ready.
+Till now the local mode is ready.
 
 ### Database Configuration
 ``host``, ``port``, ``user``, ``password``, ``database`` are the connection information of the database.
@@ -257,11 +258,11 @@ database:
   database: ""
 ```
 #### PostgreSQL
-step1: Install python packages
+Step 1: Install Python packages
 ```bash
 pip install psycopg2
 ```
-step2: prepare the config.yml like this:
+Step 2: prepare the config.yml like this:
 ```yaml
 database:
   dialect: "postgresql"
@@ -274,8 +275,8 @@ database:
 
 Note that ``dialect`` should be ``postgresql`` for postgresql.
 ## Launch
-### Claude desktop
-Add this in your claude desktop config file, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/claude_desktop.jpg">claude desktop config example</a>
+### Claude Desktop
+Add this in your Claude Desktop config file, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/claude_desktop.jpg">Claude Desktop config example</a>
 ```json
 {
     "mcpServers": {
@@ -293,27 +294,27 @@ Add this in your claude desktop config file, ref <a href="https://github.com/XGe
 }
 ```
 ### Cline
-prepare the config like [Claude desktop](#claude-desktop)
+Prepare the config like [Claude Desktop](#claude-desktop)
 
 ### Goose
-Add following command in the config, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/goose.jpg">goose config example</a>
+Add following command in the config, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/goose.jpg">Goose config example</a>
 
 ```yaml
 env YML=path/to/yml python -m xiyan_mcp_server
 ```
 ### Cursor
-Use the same command like [Goose](#goose) .
+Use the same command like [Goose](#goose).
 
 
 ### Witsy
-Add following in command.
+Add following in command:
 ```yaml
 python -m xiyan_mcp_server
 ```
 Add an env: key is YML and value is the path to your yml file.
-Ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/witsy.jpg">witsy config example</a>
-## It does not work!
-contact us:
+Ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/witsy.jpg">Witsy config example</a>
+## It Does Not Work!
+Contact us:
 <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/dinggroup_out.png">Ding Group钉钉群</a>｜ 
 <a href="https://weibo.com/u/2540915670" target="_blank">Follow me on Weibo</a>
 
@@ -330,5 +331,3 @@ If you find our work helpful, feel free to give us a cite.
       primaryClass={cs.AI}
 }
 ```
-
-
