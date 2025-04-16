@@ -16,6 +16,7 @@
 🤖 <a href="https://modelscope.cn/collections/XiYanSQL-Models-4483337b614241" >ModelScope</a> |
 🌕 <a href="https://bailian.console.aliyun.com/xiyan">析言GBI</a> 
 <br />
+<img src="https://badge.mcpx.dev/?type=server%20%27MCP%20Server%27" alt="MCP Server" />
 <a href="https://arxiv.org/abs/2411.08599"><img src="imgs/Paper-Arxiv-orange.svg" ></a>
 <a href="https://opensource.org/licenses/Apache-2.0">
   <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License: Apache 2.0" />
@@ -71,13 +72,19 @@
 ### Architecture
 There are two ways to integrate this server in your project, as shown below:
 The left is remote mode, which is the default mode. It requires an API key to access the xiyanSQL-qwencoder-32B model from service provider (see [Configuration](#Configuration)).
-Another mode is local mode, which is more secure. It does not require an API key.
+Another mode is local mode, which is more secure. It does not require the API key.
 
 ![architecture.png](imgs/architecture.png)
-### Best practice
+### Best practice and reports
 
-[Build a local data assistant using MCP + Modelscope API-Inference without writing a single line of code](https://mp.weixin.qq.com/s/tzDelu0W4w6t9C0_yYRbHA)
+["Build a local data assistant using MCP + Modelscope API-Inference without writing a single line of code"](https://mp.weixin.qq.com/s/tzDelu0W4w6t9C0_yYRbHA)
 
+["Xiyan MCP on Modelscope"](https://modelscope.cn/headlines/article/1142)
+
+### Evaluation on MCPBench
+The following figure illustrates the performance of the XiYan MCP server as measured by the MCPBench benchmark. The XiYan MCP server demonstrates superior performance compared to both the MySQL MCP server and the PostgreSQL MCP server, achieving a lead of 2-22 percentage points. The detailed experiment results can be found at [MCPBench](https://github.com/modelscope/MCPBench) and the report ["Evaluation Report on MCP Servers"](https://arxiv.org/abs/2504.11094).
+
+![exp_mcpbench.png](imgs/exp_mcpbench.png)
 
 ### Tools Preview
  - The tool ``get_data`` provides a natural language interface for retrieving data from a database. This server will convert the input natural language into SQL using a built-in model and call the database to return the query results.
