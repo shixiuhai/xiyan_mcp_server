@@ -64,7 +64,7 @@
 - 🌐 Fetch data by natural language through [XiYanSQL](https://github.com/XGenerationLab/XiYan-SQL)
 - 🤖 Support general LLMs (GPT,qwenmax), Text-to-SQL SOTA model
 - 💻 Support pure local mode (high security!)
-- 📝 Support MySQL and PostgreSQL.
+- 📝 Support MySQL and PostgreSQL. 
 - 🖱️ List available tables as resources
 - 🔧 Read table contents
 
