@@ -28,7 +28,7 @@
     <img src="https://img.shields.io/github/stars/XGenerationLab/xiyan_mcp_server?style=social" alt="GitHub stars" />
 </a>
 <br />
-<a href="https://github.com/XGenerationLab/xiyan_mcp_server">英文</a> | <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/README_zh.md">中文</a><br />
+<a href="https://github.com/XGenerationLab/xiyan_mcp_server">英文</a> | <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/README_zh.md">中文</a> | <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/README_ja.md">日本語</a><br />
 <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/dinggroup_out.png">钉钉群</a> | 
 <a href="https://weibo.com/u/2540915670" target="_blank">关注我</a>
 </p>
