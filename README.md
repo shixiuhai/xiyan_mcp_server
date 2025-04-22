@@ -288,7 +288,7 @@ Add this in your Claude Desktop config file, ref <a href="https://github.com/XGe
 {
     "mcpServers": {
         "xiyan-mcp-server": {
-            "command": "python",
+            "command": "/xxx/python",
             "args": [
                 "-m",
                 "xiyan_mcp_server"
@@ -300,6 +300,7 @@ Add this in your Claude Desktop config file, ref <a href="https://github.com/XGe
     }
 }
 ```
+**Please note that the Python command here requires the complete path to the Python executable (`/xxx/python`); otherwise, the Python interpreter cannot be found. You can determine this path by using the command `which python`. The same applies to other applications as well.**
 ### Cline
 Prepare the config like [Claude Desktop](#claude-desktop)
 
@@ -307,7 +308,7 @@ Prepare the config like [Claude Desktop](#claude-desktop)
 Add following command in the config, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/goose.jpg">Goose config example</a>
 
 ```yaml
-env YML=path/to/yml python -m xiyan_mcp_server
+env YML=path/to/yml /xxx/python -m xiyan_mcp_server
 ```
 ### Cursor
 Use the same command like [Goose](#goose).
@@ -316,7 +317,7 @@ Use the same command like [Goose](#goose).
 ### Witsy
 Add following in command:
 ```yaml
-python -m xiyan_mcp_server
+/xxx/python -m xiyan_mcp_server
 ```
 Add an env: key is YML and value is the path to your yml file.
 Ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/witsy.jpg">Witsy config example</a>
