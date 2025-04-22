@@ -285,7 +285,7 @@ database:
 {
     "mcpServers": {
         "xiyan-mcp-server": {
-            "command": "python",
+            "command": "/xxx/python",
             "args": [
                 "-m",
                 "xiyan_mcp_server"
@@ -297,6 +297,7 @@ database:
     }
 }
 ```
+**注意此处的python命令需要完整的python可执行文件路径（`/xxx/python`），否则会找不到python解释器，可以通过`which python`来确定此路径。使用其他非claude应用也是如此。**
 ### Cline
 准备配置，参考 [Claude Desktop](#claude-desktop)
 
@@ -304,7 +305,7 @@ database:
 在配置中添加以下命令，参考 <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/goose.jpg">Goose 配置示例</a>
 
 ```yaml
-env YML=path/to/yml python -m xiyan_mcp_server
+env YML=path/to/yml /xxx/python -m xiyan_mcp_server
 ```
 ### Cursor
 使用与 [Goose](#goose) 相同的命令。
@@ -312,7 +313,7 @@ env YML=path/to/yml python -m xiyan_mcp_server
 ### Witsy
 在命令中添加以下内容：
 ```yaml
-python -m xiyan_mcp_server
+/xxx/python -m xiyan_mcp_server
 ```
 添加一个环境变量：键为 YML，值为您 yml 文件的路径。
 参考 <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/witsy.jpg">Witsy 配置示例</a>
