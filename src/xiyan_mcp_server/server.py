@@ -1,5 +1,8 @@
+import argparse
 import logging
 import os
+from typing import Literal
+
 import yaml  # 添加yaml库导入
 
 from mysql.connector import connect, Error
@@ -24,6 +27,7 @@ logger = logging.getLogger("xiyan_mcp_server")
 
 def get_yml_config():
     config_path = os.getenv("YML", os.path.join(os.path.dirname(__file__), "config_demo.yml"))
+    print(f"Load configuration from {config_path}")
     try:
         with open(config_path, 'r') as file:
             config = yaml.safe_load(file)
@@ -76,7 +80,7 @@ async def read_resource(table_name) -> str:
         raise RuntimeError(f"Database error: {str(e)}")
 
 
-def sql_gen_and_execute(db_env, query: str):
+def sql_gen_and_execute(db_env: DataBaseEnv, query: str):
     """
     Transfers the input natural language question to sql query (known as Text-to-sql) and executes it on the database.
      Args:
@@ -180,11 +184,12 @@ def get_data(query: str)-> list[TextContent]:
     res=call_xiyan(query)
     return [TextContent(type="text", text=res)]
 
-def main():
-    mcp.run()
 
+def run_mcp(transport: Literal["stdio", "sse"] = "stdio"):
+    """Start the MCP server with the specified transport method.
 
-if __name__ == "__main__":
-
-    main()
+    Args:
+        transport (str): The transport method to use, either "stdio" or "sse".
+    """
+    mcp.run(transport=transport)
 
