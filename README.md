@@ -12,7 +12,7 @@
 🌐 <a href="https://github.com/XGenerationLab/XiYan-SQL" >XiYan-SQL</a> |
 📖 <a href="https://arxiv.org/abs/2411.08599"> Arxiv</a> | 
 📄 <a href="https://paperswithcode.com/paper/xiyan-sql-a-multi-generator-ensemble" >PapersWithCode</a>
-💻 <a href="https://huggingface.co/collections/XGenerationLab/xiyansql-models-67c9844307b49f87436808fc">HuggingFace</a> |
+🤗 <a href="https://huggingface.co/collections/XGenerationLab/xiyansql-models-67c9844307b49f87436808fc">HuggingFace</a> |
 🤖 <a href="https://modelscope.cn/collections/XiYanSQL-Models-4483337b614241" >ModelScope</a> |
 🌕 <a href="https://bailian.console.aliyun.com/xiyan">析言GBI</a> 
 <br />
@@ -282,7 +282,10 @@ database:
 
 Note that ``dialect`` should be ``postgresql`` for postgresql.
 ## Launch
-### Claude Desktop
+
+### STDIO Transport
+Normally, stdio transport is used with the specific mcp application as follows.
+#### Claude Desktop
 Add this in your Claude Desktop config file, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/claude_desktop.jpg">Claude Desktop config example</a>
 ```json
 {
@@ -301,26 +304,47 @@ Add this in your Claude Desktop config file, ref <a href="https://github.com/XGe
 }
 ```
 **Please note that the Python command here requires the complete path to the Python executable (`/xxx/python`); otherwise, the Python interpreter cannot be found. You can determine this path by using the command `which python`. The same applies to other applications as well.**
-### Cline
+#### Cline
 Prepare the config like [Claude Desktop](#claude-desktop)
 
-### Goose
+#### Goose
 Add following command in the config, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/goose.jpg">Goose config example</a>
 
 ```yaml
 env YML=path/to/yml /xxx/python -m xiyan_mcp_server
 ```
-### Cursor
+#### Cursor
 Use the same command like [Goose](#goose).
 
 
-### Witsy
+#### Witsy
 Add following in command:
-```yaml
+```shell
 /xxx/python -m xiyan_mcp_server
 ```
 Add an env: key is YML and value is the path to your yml file.
 Ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/witsy.jpg">Witsy config example</a>
+
+### SSE Transport
+SSE transport server has to be started with the following command first. The server runs defaultly on port 8000. You can change it by setting the environment variable FASTMCP_PORT.
+```shell
+env YML=path/to/yml FASTMCP_PORT=8000 python -m xiyan_mcp_server sse
+```
+You may also change the host or other parameters by setting the corresponding environment variables, but these are not fully tested.
+Then you should see the information on http://localhost:8000/sse in your browser.
+
+Then you can use the server in applications mentioned above. For example, the config of Cursor is like this:
+```json
+{
+    "mcpServers": {
+        "xiyan-mcp-server": {
+            "url": "http://127.0.0.1:8000/sse"
+        }
+    }
+}
+```
+
+
 ## It Does Not Work!
 Contact us:
 <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/dinggroup_out.png">Ding Group钉钉群</a>｜ 

@@ -178,18 +178,20 @@ def get_data(query: str)-> list[TextContent]:
     """Fetch the data from database through a natural language query
 
     Args:
-        query: The query in natual language
+        query: The query in natural language
     """
 
     res=call_xiyan(query)
     return [TextContent(type="text", text=res)]
 
 
-def run_mcp(transport: Literal["stdio", "sse"] = "stdio"):
-    """Start the MCP server with the specified transport method.
 
-    Args:
-        transport (str): The transport method to use, either "stdio" or "sse".
-    """
-    mcp.run(transport=transport)
+def main():
+    parser = argparse.ArgumentParser(description="Run MCP server.")
+    parser.add_argument('transport', nargs='?', default='stdio', choices=['stdio', 'sse'],
+                        help='Transport type (stdio or sse)')
+    args = parser.parse_args()
+    mcp.run(transport=args.transport)
 
+if __name__ == "__main__":
+    main()
