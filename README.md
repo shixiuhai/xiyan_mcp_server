@@ -98,18 +98,13 @@ The following figure illustrates the performance of the XiYan MCP server as meas
 Python 3.11+ is required. 
 You can install the server through pip, and it will install the latest version:
 
-```bash
+```shell
 pip install xiyan-mcp-server
 ```
 
-After that you can directly run the server by:
-```bash
-python -m xiyan_mcp_server
-```
-But it does not provide any functions until you complete following config.
-You will get a yml file. After that you can run the server by:
-```yaml
-env YML=path/to/yml python -m xiyan_mcp_server
+If you want to install the development version from source, you can install from source code on github:
+```shell
+pip install git+https://github.com/XGenerationLab/xiyan_mcp_server.git
 ```
 
 ### Installing from Smithery.ai
@@ -123,11 +118,12 @@ You need a YAML config file to configure the server.
 A default config file is provided in config_demo.yml which looks like this:
 
 ```yaml
+mcp:
+  transport: "stdio"
 model:
   name: "XGenerationLab/XiYanSQL-QwenCoder-32B-2412"
   key: ""
   url: "https://api-inference.modelscope.cn/v1/"
-
 database:
   host: "localhost"
   port: 3306
@@ -135,6 +131,27 @@ database:
   password: ""
   database: ""
 ```
+
+### MCP Configuration
+You can set the transport protocol to ``stdio`` or ``sse``.
+#### STDIO
+For stdio protocol, you can set just like this:
+```yaml
+mcp:
+  transport: "stdio"
+```
+#### SSE
+For sse protocol, you can set mcp config as below:
+```yaml
+mcp:
+  transport: "sse"
+  port: 8000
+  log_level: "INFO"
+```
+The default port is `8000`. You can change the port if needed. 
+The default log level is `ERROR`. We recommend to set log level to `INFO` for more detailed information.
+
+Other configurations like `debug`, `host`, `sse_path`, `message_path` can be customized as well, but normally you don't need to modify them.
 
 ### LLM Configuration
 ``Name`` is the name of the model to use, ``key`` is the API key of the model, ``url`` is the API url of the model. We support following models.
@@ -201,53 +218,14 @@ model:
   name: "xiyansql-qwencoder-32b"
   key: "KEY"
   url: "https://xiyan-stream.biz.aliyun.com/service/api/xiyan-sql"
-database:
 ```
 
 Note: this model service is just for trial, if you need to use it in production, please contact us.
 
+##### (3) Local version
 Alternatively, you can also deploy the model [XiYanSQL-qwencoder-32B](https://github.com/XGenerationLab/XiYanSQL-QwenCoder) on your own server.
+See [Local Model](src/xiyan_mcp_server/local_model/README.md) for more details.
 
-#### Local Model
-Note: the local model is slow (about 12 seconds per query on my macbook).
-If you need a stable and fast service, we still recommend to use the modelscope version.
-
-To run xiyan_mcp_server in local mode, you need 
-1) a PC/Mac with at least 16GB RAM
-2) 6GB disk space
-
-Step 1: Install additional Python packages
-```bash
-pip install flask modelscope torch==2.2.2 accelerate>=0.26.0 numpy=2.2.3
-```
-
-Step 2: (optional) manually download the model
-We recommend [xiyansql-qwencoder-3b](https://www.modelscope.cn/models/XGenerationLab/XiYanSQL-QwenCoder-3B-2502/).
-You can manually download the model by
-```bash
-modelscope download --model XGenerationLab/XiYanSQL-QwenCoder-3B-2502
-```
-It will take you 6GB disk space.
-
-Step 3: download the script and run server. src/xiyan_mcp_server/local_xiyan_server.py
-
-
-
-```bash
-python local_xiyan_server.py
-```
-The server will be running on http://localhost:5090/
-
-Step 4: prepare config and run xiyan_mcp_server
-the config.yml should be like:
-```yml
-model:
-  name: "xiyansql-qwencoder-3b"
-  key: "KEY"
-  url: "http://127.0.0.1:5090"
-```
-
-Till now the local mode is ready.
 
 ### Database Configuration
 ``host``, ``port``, ``user``, ``password``, ``database`` are the connection information of the database.
@@ -283,8 +261,19 @@ database:
 Note that ``dialect`` should be ``postgresql`` for postgresql.
 ## Launch
 
-### STDIO Transport
-Normally, stdio transport is used with the specific mcp application as follows.
+### Server Launch
+
+If you want to launch server with `sse`, you have to run the following command in a terminal:
+```shell
+YML=path/to/yml python -m xiyan_mcp_server
+```
+Then you should see the information on http://localhost:8000/sse in your browser. (Defaultly, change if your mcp server runs on other host/port)
+
+Otherwise, if you use `stdio` transport protocol, you usually declare the mcp server command in specific mcp application instead of launching it in a terminal.
+However, you can still debug with this command if needed.
+
+### Client Setting
+
 #### Claude Desktop
 Add this in your Claude Desktop config file, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/claude_desktop.jpg">Claude Desktop config example</a>
 ```json
@@ -304,17 +293,48 @@ Add this in your Claude Desktop config file, ref <a href="https://github.com/XGe
 }
 ```
 **Please note that the Python command here requires the complete path to the Python executable (`/xxx/python`); otherwise, the Python interpreter cannot be found. You can determine this path by using the command `which python`. The same applies to other applications as well.**
+
+Claude Desktop currently does not support the SSE transport protocol.
+
 #### Cline
 Prepare the config like [Claude Desktop](#claude-desktop)
 
 #### Goose
-Add following command in the config, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/goose.jpg">Goose config example</a>
-
-```yaml
+If you use `stdio`, add following command in the config, ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/goose.jpg">Goose config example</a>
+```shell
 env YML=path/to/yml /xxx/python -m xiyan_mcp_server
 ```
+Otherwise, if you use `sse`, change Type to `SSE` and set the endpoint to `http://127.0.0.1:8000/sse`
 #### Cursor
-Use the same command like [Goose](#goose).
+Use the similar command as follows.
+
+For `stdio`:
+```json
+{
+  "mcpServers": {
+    "xiyan-mcp-server": {
+      "command": "/xxx/python",
+      "args": [
+        "-m",
+        "xiyan_mcp_server"
+      ],
+      "env": {
+        "YML": "path/to/yml"
+      }
+    }
+  }
+}
+```
+For `sse`:
+```json
+{
+  "mcpServers": {
+    "xiyan_mcp_server_1": {
+      "url": "http://localhost:8000/sse"
+    }
+  }
+}
+```
 
 
 #### Witsy
@@ -324,25 +344,6 @@ Add following in command:
 ```
 Add an env: key is YML and value is the path to your yml file.
 Ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/witsy.jpg">Witsy config example</a>
-
-### SSE Transport
-SSE transport server has to be started with the following command first. The server runs defaultly on port 8000. You can change it by setting the environment variable FASTMCP_PORT.
-```shell
-env YML=path/to/yml FASTMCP_PORT=8000 python -m xiyan_mcp_server sse
-```
-You may also change the host or other parameters by setting the corresponding environment variables, but these are not fully tested.
-Then you should see the information on http://localhost:8000/sse in your browser.
-
-Then you can use the server in applications mentioned above. For example, the config of Cursor is like this:
-```json
-{
-    "mcpServers": {
-        "xiyan-mcp-server": {
-            "url": "http://127.0.0.1:8000/sse"
-        }
-    }
-}
-```
 
 
 ## It Does Not Work!

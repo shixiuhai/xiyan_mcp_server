@@ -2,12 +2,12 @@ import argparse
 import logging
 import os
 from typing import Literal
-
 import yaml  # 添加yaml库导入
 
 from mysql.connector import connect, Error
 from mcp.server import  FastMCP
 from mcp.types import TextContent
+
 from .utils.db_config import DBConfig
 from .database_env import DataBaseEnv
 from .utils.db_source import HITLSQLDatabase
@@ -15,7 +15,7 @@ from .utils.db_util import init_db_conn
 from .utils.file_util import extract_sql_from_qwen
 from .utils.llm_util import call_openai_sdk
 
-mcp = FastMCP("xiyan")
+
 
 
 # Configure logging
@@ -25,9 +25,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger("xiyan_mcp_server")
 
+
 def get_yml_config():
     config_path = os.getenv("YML", os.path.join(os.path.dirname(__file__), "config_demo.yml"))
-    print(f"Load configuration from {config_path}")
+    logger.info(f"Loading configuration from {config_path}")
     try:
         with open(config_path, 'r') as file:
             config = yaml.safe_load(file)
@@ -48,15 +49,18 @@ def get_xiyan_config(db_config):
 
 
 global_config = get_yml_config()
-#print(global_config)
+mcp_config = global_config.get('mcp', {})
 model_config = global_config['model']
 global_db_config = global_config.get('database')
-database_name = global_db_config.get('database','')
 global_xiyan_db_config = get_xiyan_config(global_db_config)
 dialect = global_db_config.get('dialect','mysql')
-#print("dialect is !!!!"+dialect)
 
-@mcp.resource(dialect+'://'+database_name)
+
+
+mcp = FastMCP("xiyan", **mcp_config)
+
+
+@mcp.resource(dialect+'://'+global_db_config.get('database',''))
 async def read_resource() -> str:
 
     db_engine = init_db_conn(global_xiyan_db_config)

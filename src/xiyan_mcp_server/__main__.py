@@ -1,15 +1,10 @@
-import argparse
-import sys
 
-from .server import mcp
-
+from .server import mcp, global_config, mcp_config
 
 def main():
-    parser = argparse.ArgumentParser(description="Run MCP server.")
-    parser.add_argument('transport', nargs='?', default='stdio', choices=['stdio', 'sse'],
-                        help='Transport type (stdio or sse)')
-    args = parser.parse_args(sys.argv[1:])  # 忽略第一个参数（模块名）
-    mcp.run(transport=args.transport)
+    mcp.run(transport=mcp_config.get('transport', 'stdio'))
+
+
 
 if __name__ == "__main__":
     main()
