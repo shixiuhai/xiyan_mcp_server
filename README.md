@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/xgenerationlab-xiyan-mcp-server-badge.png)](https://mseep.ai/app/xgenerationlab-xiyan-mcp-server)
+
 <h1 align="center">XiYan MCP Server</h1>
 <p align="center">
   <a href="https://github.com/XGenerationLab/XiYan-SQL"><img alt="MCP Playwright" src="https://raw.githubusercontent.com/XGenerationLab/XiYan-SQL/main/xiyanGBI.png" height="60"/></a>
