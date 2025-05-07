@@ -1,4 +1,3 @@
-[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/xgenerationlab-xiyan-mcp-server-badge.png)](https://mseep.ai/app/xgenerationlab-xiyan-mcp-server)
 
 <h1 align="center">XiYan MCP Server</h1>
 <p align="center">
@@ -8,7 +7,6 @@
   <b>A Model Context Protocol (MCP) server that enables natural language queries to databases</b><br/>
   <sub>powered by <a href="https://github.com/XGenerationLab/XiYan-SQL" >XiYan-SQL</a>, SOTA of text-to-sql on open benchmarks</sub>
 </p>
-
 <p align="center">
 💻 <a href="https://github.com/XGenerationLab/xiyan_mcp_server" >XiYan-mcp-server</a> | 
 🌐 <a href="https://github.com/XGenerationLab/XiYan-SQL" >XiYan-SQL</a> |
@@ -352,6 +350,13 @@ Ref <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/w
 Contact us:
 <a href="https://github.com/XGenerationLab/xiyan_mcp_server/blob/main/imgs/dinggroup_out.png">Ding Group钉钉群</a>｜ 
 <a href="https://weibo.com/u/2540915670" target="_blank">Follow me on Weibo</a>
+
+
+## Other Related Links
+
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/xgenerationlab-xiyan-mcp-server-badge.png)](https://mseep.ai/app/xgenerationlab-xiyan-mcp-server)
+
+
 
 
 ## Citation
