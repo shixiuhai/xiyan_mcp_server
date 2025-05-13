@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Module",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "xiyan_mcp_server.server",
+      "cwd": "${workspaceFolder}/src",
+      "env": {
+        "YML": "/home/xxx/config.yml",
+        "PYTHONPATH": "${workspaceFolder}/src"
+      }
+    }
+  ]
+}
