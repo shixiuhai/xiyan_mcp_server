@@ -62,14 +62,21 @@ mcp = FastMCP("xiyan", **mcp_config)
 
 @mcp.resource(dialect+'://'+global_db_config.get('database',''))
 async def read_resource() -> str:
-
+    allowed_tables = global_db_config.get('allowed_tables', [])
     db_engine = init_db_conn(global_xiyan_db_config)
     db_source = HITLSQLDatabase(db_engine)
-    return db_source.mschema.to_mschema()
+    # 过滤 schema 仅保留 allowed_tables
+    allowed_schema = {table: db_source.mschema[table] for table in allowed_tables if table in db_source.mschema}
+    return str(allowed_schema)
+    # return db_source.mschema.to_mschema()
 
 @mcp.resource(dialect+"://{table_name}")
 async def read_resource(table_name) -> str:
-    """Read table contents."""
+    """Read table contents, but only allowed tables."""
+    allowed_tables = global_db_config.get('allowed_tables', [])
+    if table_name not in allowed_tables:
+        raise RuntimeError(f"Access to table '{table_name}' is not allowed.")
+    
     config = global_db_config
     try:
         with connect(**config) as conn:
